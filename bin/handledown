@@ -8,11 +8,21 @@ var csv = require("csv");
 var mdPath = process.argv[2];
 var csvPath = process.argv[3];
 
-if (process.argv.length != 3 || !fs.existsSync(mdPath) || !fs.existsSync(csvPath)) {
+if (mdPath && mdPath.indexOf("./") == 0) {
+	mdPath = mdPath.replace("./", process.env.PWD+"/");
+}
+
+if (csvPath && csvPath.indexOf("./") == 0) {
+	csvPath = csvPath.replace("./", process.env.PWD+"/");
+}
+
+if (process.argv.length != 4 || !fs.existsSync(mdPath) || !fs.existsSync(csvPath)) {
 	console.error("usage: handledown <markdown-template-file> <data-csv>");
 } else {
-	csv.parse(fs.readFileSync(csvPath, 'utf8'), function (csvData) {
-		fs.readFileSync(mdPath, 'utf8', function (mdData) {
+	fs.readFile(csvPath, 'utf8', function (csvRaw) {
+
+		csvData = csv().from(csvRaw);
+		fs.readFile(mdPath, 'utf8', function (mdData) {
 			handledown(csvData, mdData, function (data) {
 				console.log(data);
 			})
