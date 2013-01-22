@@ -1,0 +1,19 @@
+{
+    "name": "handledown"
+  , "version": "0.0.1"
+  , "dependencies": {
+      "handlebars": ">= 1.0.0",
+      "markdown": "0.4.0"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "main": "./lib/handledown",
+  "bin": {
+    "handledown": "./bin/handledown"
+  }
+}
+
+
+
